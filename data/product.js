@@ -11,7 +11,7 @@ export const products = [
       count:4.5
     },
   seller: 'Ahmad Ibrahim',
-  category:'Books'
+  category:'books'
 } ,
 {
   id:332,
@@ -25,7 +25,7 @@ export const products = [
       count:4.0
     },
   seller: 'Dahlia Sahara',
-  category:'Clothing'
+  category:'clothing'
 },
 {
   id:333,
@@ -39,7 +39,7 @@ export const products = [
       count:4.0
     },
   seller: 'Arif Naufal',
-  category:'Electronics'
+  category:'electronics'
 }
 
 ];

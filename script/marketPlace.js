@@ -17,10 +17,15 @@ closeBtn.addEventListener('click',closeNav);
 
 const cart = [];
 
-let productsHTML = '';
+const productsHTML = document.querySelector('.js-container-grid');
 
-products.forEach((product) => {
-  productsHTML += 
+renderProducts(products);
+
+function renderProducts(products){
+  productsHTML.innerHTML = '';
+
+  products.forEach((product) => {
+  const productHTML =
 `
     <div class="product-container js-container-grid">
         <div class="image-container">
@@ -38,7 +43,7 @@ products.forEach((product) => {
             ${product.seller}
           </div>
           <div  class="seller-rating">
-            ${(product.rating.count).toFixed(1)}
+            ${product.rating.count.toFixed(1)}
           </div>
         </div>
         
@@ -51,13 +56,10 @@ products.forEach((product) => {
           
       </div>
 
-`;
-});
+      `;
 
-document.querySelector('.js-container-grid').innerHTML = productsHTML;
-
-function addToCart(){
-  
+      productsHTML.insertAdjacentHTML('beforeend',productHTML); 
+  });
 }
 
 export function priceCentsFixed(priceCents){
@@ -65,34 +67,29 @@ export function priceCentsFixed(priceCents){
   return price;
 }
 
-const categoryBtn = document.querySelectorAll('.category');
-const listProducts = document.querySelectorAll('.product-container');
+const categoryBtns = document.querySelectorAll('.category');
 
-function filterProducts(category){
 
-  products.forEach(product => {
-    const productCategory = button.dataset.category;
+categoryBtns.forEach(button => {
+  button.addEventListener('click',() => {
+    const selectedCategory = button.dataset.category;
     
-    if(category === 'all' || productCategory === product.category){
-      product.style.display = 'inline-block';
+    if(selectedCategory === 'all'){
+      renderProducts(products);
     }
     else {
-      product.style.display = 'none';
+      const filtered = products.filter(
+        product => product.category === selectedCategory
+      );
+      renderProducts(filtered);
     }
-  });
-}
-
-categoryBtn.forEach(button => {
-  button.addEventListener('click',() => {
-    const selectedCategory = button.dataset.Category;
-    filterProducts(selectedCategory);
+  
     setActiveButton(button);
-  });
-
+   });
 });
 
 function setActiveButton(activeBtn){
-  categoryButtons.forEach(button => button.classList.remove('active'));
+  categoryBtns.forEach(button => button.classList.remove('active'));
   activeBtn.classList.add('active');
 }
 
