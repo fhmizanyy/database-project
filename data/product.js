@@ -10,7 +10,8 @@ export const products = [
       image: 'images/icons/rating-star.jpeg',
       count:4.5
     },
-  seller: 'Ahmad Ibrahim'
+  seller: 'Ahmad Ibrahim',
+  category:'Books'
 } ,
 {
   id:332,
@@ -23,7 +24,8 @@ export const products = [
       image: 'images/icons/rating-star.jpeg',
       count:4.0
     },
-  seller: 'Dahlia Sahara'
+  seller: 'Dahlia Sahara',
+  category:'Clothing'
 },
 {
   id:333,
@@ -36,7 +38,8 @@ export const products = [
       image: 'images/icons/rating-star.jpeg',
       count:4.0
     },
-  seller: 'Arif Naufal'
+  seller: 'Arif Naufal',
+  category:'Electronics'
 }
 
 ];

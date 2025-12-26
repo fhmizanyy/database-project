@@ -65,6 +65,38 @@ export function priceCentsFixed(priceCents){
   return price;
 }
 
+const categoryBtn = document.querySelectorAll('.category');
+const listProducts = document.querySelectorAll('.product-container');
+
+function filterProducts(category){
+
+  products.forEach(product => {
+    const productCategory = button.dataset.category;
+    
+    if(category === 'all' || productCategory === product.category){
+      product.style.display = 'inline-block';
+    }
+    else {
+      product.style.display = 'none';
+    }
+  });
+}
+
+categoryBtn.forEach(button => {
+  button.addEventListener('click',() => {
+    const selectedCategory = button.dataset.Category;
+    filterProducts(selectedCategory);
+    setActiveButton(button);
+  });
+
+});
+
+function setActiveButton(activeBtn){
+  categoryButtons.forEach(button => button.classList.remove('active'));
+  activeBtn.classList.add('active');
+}
+
+
 
 
 
