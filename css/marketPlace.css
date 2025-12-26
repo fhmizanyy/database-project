@@ -1,0 +1,135 @@
+/* PRODUCT CARD */
+.product-container {
+  width: 220px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 12px;
+  margin: 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* IMAGE */
+.image-container {
+  width: 100%;
+  height: 140px;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.image-products {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXT */
+.category-name {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.product-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+/* SELLER */
+.seller-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.seller-rating {
+  background-color: #16a34a;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* LOCATION & PRICE */
+.product-mahallah {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-top: 6px;
+}
+
+.main {
+  margin-top: 60px;
+}
+
+.container-grid {
+  display: grid;
+
+  /* - In CSS Grid, 1fr means a column will take up the
+       remaining space in the grid.
+     - If we write 1fr 1fr ... 1fr; 8 times, this will
+       divide the grid into 8 columns, each taking up an
+       equal amount of the space.
+     - repeat(8, 1fr); is a shortcut for repeating "1fr"
+       8 times (instead of typing out "1fr" 8 times).
+       repeat(...) is a special property that works with
+       display: grid; */
+  grid-template-columns: repeat(8, 1fr);
+}
+
+/* @media is used to create responsive design (making the
+   website look good on any screen size). This @media
+   means when the screen width is 2000px or less, we
+   will divide the grid into 7 columns instead of 8. */
+@media (max-width: 2000px) {
+  .container-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+/* This @media means when the screen width is 1600px or
+   less, we will divide the grid into 6 columns. */
+@media (max-width: 1600px) {
+  .container-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 1300px) {
+  .container-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .container-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .container-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .container-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .container-grid {
+    grid-template-columns: 1fr;
+  }
+}

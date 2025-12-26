@@ -1,0 +1,60 @@
+/* HEADER */
+.market-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e3a8a;
+  padding: 10px 20px;
+  color: white;
+}
+
+.market-left-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.IIUM-text-logo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.market-mid-section input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.search-button {
+  background-color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.market-right-section img {
+  width: 26px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.sell-button {
+  background-color:white;
+  font-family:Arial, Helvetica, sans-serif;
+  color:black;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  font-weight:bold;
+  padding:10px;
+  margin-right:20px;
+  border-radius:6px;
+  cursor:pointer;
+  border:0;
+}
+
+.iium-logo{
+  height:36px;
+  width:auto;
+  object-fit:contain;
+
+}
