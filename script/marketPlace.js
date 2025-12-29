@@ -15,13 +15,11 @@ export function closeNav() {
 closeBtn.addEventListener('click',closeNav);
  menuBtn.addEventListener('click',openNav);
 
-const cart = [];
-
 const productsHTML = document.querySelector('.js-container-grid');
 
 renderProducts(products);
 
-function renderProducts(products){
+export function renderProducts(products){
   productsHTML.innerHTML = '';
 
   products.forEach((product) => {
@@ -53,7 +51,10 @@ function renderProducts(products){
         <div class="product-price">
           RM${priceCentsFixed(product.priceCents)}
         </div>
-          
+
+        <div class="product-cart">
+          <button class="cart-button">Add To Cart</button>
+        </div>
       </div>
 
       `;
