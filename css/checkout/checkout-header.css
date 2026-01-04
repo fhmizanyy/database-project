@@ -1,0 +1,54 @@
+/* ===== CHECKOUT HEADER ===== */
+
+.checkout-header {
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left */
+.checkout-header-left-section img {
+  height: 28px;
+}
+
+.amazon-mobile-logo {
+  display: none;
+}
+
+/* Middle */
+.checkout-header-middle-section {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Right */
+.checkout-header-right-section img {
+  height: 24px;
+}
+
+/* ===== HEADER RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .checkout-header-middle-section {
+    display: none;
+  }
+
+  .amazon-logo {
+    display: none;
+  }
+
+  .amazon-mobile-logo {
+    display: block;
+    height: 28px;
+  }
+}

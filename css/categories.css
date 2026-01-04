@@ -12,6 +12,8 @@
   background-color: #e5e7eb;
   cursor: pointer;
   font-size: 14px;
+  font-weight:bold;
+  color: #1e3a8a;
 }
 
 .category:hover {

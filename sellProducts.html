@@ -1,0 +1,54 @@
+<html>
+  <head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/sell.css">
+  </head>
+  <body>
+    <div class="Sell-container">
+      <h2>List New Item</h2>
+      <form class="sell-form">
+        <label>Product title</label>
+        <input type="text" id="title" placeholder="e.g Engineering Textbook - Termodynamics">
+        <label>Product description</label>
+        <input type="text" id="description" placeholder="Describe your item in detail">
+        <label>Product price</label>
+        <input type="number" id="price" step="0.01" placeholder="0.00">
+        <label>Category</label>
+        <select id="category">
+              <option selected value="14">electronics</option>
+              <option value="13">books</option>
+              <option value="15">stationery</option>
+              <option value="11">clothing</option>
+              <option value="10">furniture</option>
+              <option value="12">sports</option>
+            </select>
+        <label>Condition</label>
+          <select id="condition">
+            <option selected value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        <label>Image URL</label>
+        <input type="file" id="imageInput" placeholder="https.//example.com/image.jpg..">
+        <label>Stock Quantity</label>
+        <input type="number" id="quantity" value="1" min="1">
+        
+        <button class=submit-button type="submit">Register</button>
+
+      </form>
+    </div>
+  </body>
+
+  
+</html>
+
+<script type="module" src="script/sellProducts.js"></script>

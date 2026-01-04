@@ -32,7 +32,6 @@
           </div>
         </div>
         <div class="market-right-section">
-          <button class="sell-button">Sell Item +</button>
           <img class="people-icon" src="images/icons/people.png">
           <img class="logout-icon" href="" src="images/icons/logout-icon.png">
         
@@ -50,12 +49,13 @@
       </div>
       
       <div class="Category-list">
-          <button class="category" data-category="all">All</button>
-          <button class="category" data-category="books">Books</button>
-          <button class="category" data-category="electronics">Electronics</button>
-          <button class="category" data-category="furniture">Furniture</button>
-          <button class="category" data-category="clothing">Clothing</button>
-          <button class="category" data-category="stationery">Stationery</button>
+          <button class="category" data-category="All">All</button>
+          <button class="category" data-category="Books">Books</button>
+          <button class="category" data-category="Electronics">Electronics</button>
+          <button class="category" data-category="Furniture">Furniture</button>
+          <button class="category" data-category="Clothing">Clothing</button>
+          <button class="category" data-category="Stationery">Stationery</button>
+          <button class="category" data-category="Sports">Sports</button>
       </div>
 
       <div class="Main">
@@ -64,17 +64,21 @@
       </div>
 
       <div class="bottom-Header">
-        <div class="checkout-section">
-          <div>
-            <button href="checkout.js"></button>
-            
+        <div class="bottom-header-inner">
+          <div class="sell-section">
+            <button class="sell-button js-sell-button">Sell Item +</button>
           </div>
-        <div class="cart-item-qty">
-
-        </div>
+          
+          <div class="cart-item-qty">
+            <p>Quantity Item :<span class="qty-number js-cart-qty"></span></p>
+          </div>
+            
+          <div class="checkout-section">
+            <button class="checkout-button" >Checkout here</button>           
+          </div>
+          
         </div>
       </div>
-
 
           <script type="module" src="script/marketPlace.js"></script>
   </body>

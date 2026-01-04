@@ -1,0 +1,99 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+h2{
+  color:#2563eb;
+}
+
+/* Page background */
+body {
+  margin-top: 20px;
+  min-height: 100vh;
+  background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main container */
+.Sell-container {
+  width: 100%;
+  max-width: 520px;
+  padding: 20px;
+}
+
+/* Form card */
+.sell-form {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Form title (optional if you add <h2>) */
+.sell-form h2 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* Labels */
+.sell-form label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  font-weight:bold;
+}
+
+/* Inputs & select */
+.sell-form input,
+.sell-form select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus effect */
+.sell-form input:focus,
+.sell-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Placeholder */
+.sell-form input::placeholder {
+  color: #999;
+}
+
+/* Submit button */
+.submit-button {
+  margin-top: 12px;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Hover & click */
+.submit-button:hover {
+  background: #1e4ed8;
+}
+
+.submit-button:active {
+  transform: scale(0.98);
+}
