@@ -17,7 +17,7 @@ document.querySelector('.sell-form').addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = awai*t fetch('http://localhost:3000/api/add-product', {
+        const response = await fetch('http://localhost:3000/api/add-product', {
             method: 'POST',
             // PENTING: Jangan letak headers 'Content-Type': 'application/json'
             // Browser akan automatik set jadi 'multipart/form-data'
