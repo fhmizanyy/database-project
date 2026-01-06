@@ -10,41 +10,50 @@ export async function loadProductsFromAPI() {
     return products;
   } catch (error) {
     console.error('Failed to load products',error);
-    if(productsHTML) productHTML.innerHTML = 'Failed to store product';
+    // FIX: Typo in variable name - should be 'productsHTML.innerHTML' instead of 'productHTML.innerHTML'
+    if(productsHTML) productsHTML.innerHTML = 'Failed to store product';
   }
 }
 
 const productsGrid = document.querySelector('.js-container-grid');
 if(productsGrid) {
   loadProductsFromAPI().then((data) => {
-    loadProductsFromAPI().then((data) => {
-      renderProducts(data);
-      updateCartQuantity();
-    })
+    renderProducts(data);
+    updateCartQuantity();
   });
 }
 
 loadProductsFromAPI();
 
+
+
+
+export function sidebarJS(){
   const sidebar = document.querySelector('.side-navigation');
   const menuBtn = document.querySelector('.js-menu-btn');
   const closeBtn = document.querySelector('.js-close-btn');
 
-function openNav() {
-  if (sidebar) sidebar.style.width = '250px'
-};
-
-function closeNav() {
-  if (sidebar) sidebar.style.width = '0'
-};
-
 if(closeBtn){
-  closeBtn.addEventListener('click',closeNav);
+  // FIX: Event listener should use arrow function to pass callback properly, not call function immediately
+  closeBtn.addEventListener('click',closeNav(sidebar));
 }
 
 if(menuBtn)
-  menuBtn.addEventListener('click',openNav);
+  menuBtn.addEventListener('click',openNav(sidebar));
 
+
+}
+function closeNav(sidebar) {
+  if (sidebar) sidebar.style.width = '0'
+};
+
+function openNav(sidebar) {
+  if (sidebar) sidebar.style.width = '250px'
+};
+
+sidebarJS();
+
+ 
 const productsHTML = document.querySelector('.js-container-grid');
 
 if(productsHTML){

@@ -102,10 +102,12 @@ app.post('/api/add-product', upload.single('productImage'), async (req, res) => 
 });
 */
 
+//start the server
+
 const express = require('express');
 const cors = require('cors');
-const { initPool,closePool } = require('.config/database');
-const productRoutes = require('./routes/productRates');
+const { initPool,closePool } = require('./config/database');
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -113,7 +115,16 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('./api',productRoutes);
+app.use('/api',productRoutes);
+
+app.use((err, req, res, next) => {
+    console.error('SERVER ERROR:', err.stack);
+    res.status(500).json({ 
+        success: false, 
+        message: 'Internal Server Error',
+        error: err.message 
+    });
+});
 
 // Start server
 async function startServer() {

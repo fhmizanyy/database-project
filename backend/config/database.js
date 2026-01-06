@@ -17,7 +17,7 @@ const dbConfig = {
 
 let pool;
 
-async function createPool() {
+async function initPool() {
     try {
         pool = await oracledb.createPool(dbConfig);
         console.log('✓ Database pool created');
@@ -41,4 +41,4 @@ async function closePool() {
     }
 }
 
-module.exports = { createPool, getPool, closePool };
+module.exports = { initPool, getPool, closePool };

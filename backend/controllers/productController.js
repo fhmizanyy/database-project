@@ -1,6 +1,6 @@
 // Purpose: Handle request/response logic (business logic)
 
-const productModel = require('../models/productModel');
+const productModel = require('../models/productModels');
 
 // Controller for GET /api/products
 async function getProducts(req, res) {

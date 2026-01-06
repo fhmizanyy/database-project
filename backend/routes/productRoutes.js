@@ -1,3 +1,4 @@
+// Purpose : Handle database connection Pool
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
