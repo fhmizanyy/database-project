@@ -10,7 +10,7 @@ export async function loadProductsFromAPI() {
     return products;
   } catch (error) {
     console.error('Failed to load products',error);
-    // FIX: Typo in variable name - should be 'productsHTML.innerHTML' instead of 'productHTML.innerHTML'
+    const productsHTML = document.querySelector('.js-container-grid');
     if(productsHTML) productsHTML.innerHTML = 'Failed to store product';
   }
 }
@@ -23,35 +23,26 @@ if(productsGrid) {
   });
 }
 
-loadProductsFromAPI();
 
-
-
-
-export function sidebarJS(){
   const sidebar = document.querySelector('.side-navigation');
   const menuBtn = document.querySelector('.js-menu-btn');
   const closeBtn = document.querySelector('.js-close-btn');
 
 if(closeBtn){
-  // FIX: Event listener should use arrow function to pass callback properly, not call function immediately
-  closeBtn.addEventListener('click',closeNav(sidebar));
+  closeBtn.addEventListener('click', () => closeNav);
 }
 
-if(menuBtn)
-  menuBtn.addEventListener('click',openNav(sidebar));
-
-
+if(menuBtn){
+  menuBtn.addEventListener('click',() => openNav);
 }
-function closeNav(sidebar) {
+
+function closeNav() {
   if (sidebar) sidebar.style.width = '0'
 };
 
-function openNav(sidebar) {
+function openNav() {
   if (sidebar) sidebar.style.width = '250px'
 };
-
-sidebarJS();
 
  
 const productsHTML = document.querySelector('.js-container-grid');
@@ -179,6 +170,9 @@ function updateCartQuantity() {
 
     qtyElement.innerHTML = cartQuantity;
 }
+
+
+
 
 
 

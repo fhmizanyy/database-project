@@ -27,7 +27,6 @@
         </div>
         <div class="market-right-section">
           <img class="people-icon" src="images/icons/people.png">
-          <!-- FIX: Invalid href attribute on img tag - should be an anchor tag or remove href -->
           <img class="logout-icon" href="" src="images/icons/logout-icon.png">
         
           </div>
@@ -72,12 +71,29 @@
       <div class="js-container-update-product">
 
       </div>
+    </div>
 
+    <div class="update-poppup-overlay" id="updatePopup">
+      <form class="update-form">
+        <h3>Update Item:</h3>
+        <input type="hidden" id="update-product-id">
+
+        <label id="title">Title:</label>
+        <input id="update-title" type="text "placeholder="Enter your title...">
+
+        <label id="quantity">Quantity:</label>
+        <input id="update-quantity" type="number">
+        <label id="price">Price:</label>
+        <input id="update-price" type="number" step="0.01">  
+
+        <div class="popup-buttons">
+          <button type="button" class="save-btn" id="saveUpdate">Save changes</button>
+          <button type="button" class="cancel-btn" id="closePopup">Cancel</button>
+        </div>
+      </form>
     </div>
 
     <script type="module" src="data/profile.js"></script>
-    
-    
     
   </body>
 </html>
