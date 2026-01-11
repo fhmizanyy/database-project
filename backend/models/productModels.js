@@ -17,8 +17,25 @@ const queries = {
         INSERT INTO PRODUCTS (PRODUCT_ID, TITLE, PRICE, DESCRIPTION, CAT_ID, 
                               SELLER_ID, CONDITION, IMAGE_DATA, QUANTITY)
         VALUES (prod_seq.NEXTVAL, :1, :2, :3, :4, :5, :6, :7, :8)
+    `,
+
+    updateProductsFields: `
+        UPDATE PRODUCTS 
+        SET TITLE = :title,
+            PRICE = :price,
+            QUANTITY = :quantity
+            WHERE PRODUCT_ID = :id
+
+    `,
+
+    deleteProduct:`
+        DELETE FROM PRODUCTS
+        WHERE PRODUCT_ID = :id
+
     `
 };
+
+
 
 // Function to get all products
 async function getAllProducts() {
@@ -72,4 +89,44 @@ async function createProduct(productData) {
     }
 }
 
-module.exports = { getAllProducts, createProduct };
+async function updateProducts(productId,updateData){
+    const pool = getPool();
+    const connection = await pool.getConnection();
+
+    try{
+        const bindData = {
+            id: productId,
+            title: updateData.title,
+            price: parseFloat(updateData.price),
+            quantity: parseInt(updateData.quantity)
+        }
+
+        const result = await connection.execute(queries.updateProductsFields, bindData,{autoCommit : true });
+
+        return result;
+    }catch {
+        console.error('Error updating database:',err);
+        throw err;
+    } finally {
+        await connection.close();
+    }
+}
+
+async function deleteProducts(productId){
+    const pool = getPool();
+    const connection = await pool.getConnection();
+
+    try{
+        const selectBind = {
+            id: productId
+        }
+        const result = await connection.execute(queries.deleteProduct,selectBind,{autoCommit: true});
+        return result;
+    } catch {
+        console.error('error deleting from database',err);
+        throw err;
+    } finally {
+        await connection.close();
+    }
+}
+module.exports = { getAllProducts, createProduct, updateProducts,deleteProducts};

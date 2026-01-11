@@ -13,6 +13,23 @@ async function getProducts(req, res) {
     }
 }
 
+// controller for PUT PRODUCT 
+async function updateProduct(req,res){
+    const productId = req.params.id;
+    const {title,price,quantity} = req.body;
+    try{
+        const result = await productModel.updateProducts(productId, {title,price,quantity});
+        if(result.rowsAffected > 0){
+            res.status(200).json({success: true, message: 'Product updated successfully'});
+        }else {
+            res.status(404).json({ success: false, message: 'No products found.' });
+        }
+    } catch (err) {
+        console.error('Database error');
+        res.json({success:false , message: err.message});
+    }
+}
+
 // Controller for POST /api/add-product
 async function addProduct(req, res) {
     try {
@@ -35,5 +52,21 @@ async function addProduct(req, res) {
     }
 }
 
-module.exports = { getProducts, addProduct };
+async function deleteProduct(req,res){
+    try{
+        const productId = req.params.id;
+
+        const result =  await productModel.deleteProducts(productId);
+        if (result.rowsAffected > 0) {
+            res.json({ success: true, message: 'Product Deleted! ✨' });
+        } else {
+            res.status(404).json({ success: false, message: 'Product not found.' });
+        }
+    } catch(err){
+        console.error('Error in Deleting Product:',err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+}
+
+module.exports = { getProducts, addProduct, updateProduct,deleteProduct};
 
