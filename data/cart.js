@@ -1,13 +1,19 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-function saveToStorage(){
+export function saveToStorage(){
   localStorage.setItem('cart',JSON.stringify(cart));
 }
+
+export function clearCart() {
+  cart = [];
+  saveToStorage();
+}
+
 
 export function addToCart(productId){
   let matchingItem = null;
 
-  cart.forEach( cartItem=> {
+  cart.forEach( cartItem => {
       if(cartItem.productId === productId ){
         matchingItem = cartItem;
       }

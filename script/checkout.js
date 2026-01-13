@@ -1,4 +1,4 @@
-import {cart,removeItem,updateDeliveryOption} from '../data/cart.js';
+import {cart,removeItem,updateDeliveryOption,clearCart} from '../data/cart.js';
 import {priceCentsFixed,loadProductsFromAPI} from './marketPlace.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions} from '../data/product.js';
@@ -28,9 +28,16 @@ export function renderCart(dataProducts){
     cart.forEach((cartItem) => {
       const productId = cartItem.productId;
     
-      const matchingProduct = dataProducts.find(p => p.id === Number(productId));
+      const matchingProduct = dataProducts.find(p => Number(p.id) === Number(productId));
 
-      if(!matchingProduct) return;
+      console.log('Cart Item ID:', productId);
+      console.log('API Products:', dataProducts);
+
+     
+    if (!matchingProduct) {
+      console.error(`Produk dengan ID ${productId} tidak dijumpai dalam senarai API.`);
+      return; 
+    }
 
       const deliveryOptionId = cartItem.deliveryOptionId || '1';
 
@@ -139,6 +146,47 @@ export function renderCart(dataProducts){
     return html;
   }
 
+ document.addEventListener('click', async (event) => {
+  const placeOrderBtn = event.target.closest('.js-place-order');
+  
+  if (placeOrderBtn) {
+    console.log('Order button triggered via js-place-order class');
+    if (cart.length === 0) return alert('Cart Empty!');
+  
+
+    const orderData = {
+      userId : 1000,
+      items: cart.map(item => ({
+        id: item.productId,
+        quantity: item.quantity
+      }))
+    };
+
+    try {
+      const response = await fetch ('http://localhost:3000/api/checkout', {
+        method : 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(orderData)
+      })
+
+      const result = await response.json();
+
+      if(result.success){
+        clearCart();
+        window.location.href = `success.html?orderId=${result.orderId}`; 
+      } else {
+        alert("Gagal:" + result.message);
+      }
+
+
+    } catch(err) {
+        console.error("Checkout error:", err);
+    }
+
+  }
+
+});
+
   function renderPaymentSummary(products) {
   let productPrice = 0;
   let shippingPriceCents = 0;
@@ -151,7 +199,7 @@ export function renderCart(dataProducts){
     }
 
     const deliveryOption = deliveryOptions.find(opt => opt.id === (cartItem.deliveryOptionId || '1'));
-    shippingPriceCents += deliveryOption.price;
+    shippingPriceCents += deliveryOption.price / 100;
   });
 
   const totalBeforeTaxCents = productPrice + shippingPriceCents;
@@ -201,7 +249,7 @@ export function renderCart(dataProducts){
       <div class="payment-summary-money">
         RM${(totalCents / 100).toFixed(2)}</div>
       </div>
-    <button class="place-order-button button-primary">Place your order</button>
+    <button class="place-order-button js-place-order button-primary">Place your order</button>
   `;
 
   document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;

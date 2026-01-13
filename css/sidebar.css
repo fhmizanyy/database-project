@@ -1,30 +1,62 @@
-/* SIDE NAVIGATION */
 .side-navigation {
   height: 100%;
   width: 0;
   position: fixed;
-  background-color: #1e3a8a;
+  z-index: 1200;
   top: 0;
   left: 0;
+  background-color: #1e3a8a;
   overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-.side-navigation a {
-  padding: 8px 20px;
-  display: block;
-  color: white;
-  text-decoration: none;
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: white; /* Logo area is white */
+  min-height: 70px;
 }
 
-.side-navigation a:hover {
-  background-color: #2563eb;
+.sidebar-logo {
+  height: 40px;
+  width: auto;
 }
 
 .closebtn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 30px;
+  font-size: 35px;
+  color: #1e3a8a !important; /* Forces color to be visible on white bg */
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.nav-links {
+  flex: 1;
+  padding-top: 20px;
+}
+
+.side-navigation a {
+  padding: 15px 25px;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  display: block;
+  font-weight: 600;
+}
+
+.side-navigation a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.side-navigation::after {
+  content: "IIUM DRIVE PORTAL";
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 1px;
 }

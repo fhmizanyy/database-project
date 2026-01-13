@@ -7,8 +7,8 @@ oracledb.initOracleClient({
 });
 
 const dbConfig = {
-    user: "testing",
-    password: "testing",
+    user: "DBORACLE",
+    password: "DBORACLE",
     connectString: "127.0.0.1:1521/xe",
     poolMin: 2,
     poolMax: 10,

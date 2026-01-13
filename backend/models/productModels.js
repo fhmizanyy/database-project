@@ -6,7 +6,7 @@ const oracledb = require('oracledb');
 // All SQL queries in one place
 const queries = {
     getAllProducts: `
-        SELECT p.PRODUCT_ID, p.TITLE, p.PRICE, p.DESCRIPTION, p.IMAGE_DATA,
+        SELECT p.ID, p.TITLE, p.PRICE, p.DESCRIPTION, p.IMAGE_DATA,
                c.CAT_NAME, u.USERNAME, u.RATING, u.MAHALLAH, p.QUANTITY
         FROM PRODUCTS p
         JOIN CATEGORIES c ON p.CAT_ID = c.CAT_ID
@@ -14,8 +14,8 @@ const queries = {
     `,
     
     insertProduct: `
-        INSERT INTO PRODUCTS (PRODUCT_ID, TITLE, PRICE, DESCRIPTION, CAT_ID, 
-                              SELLER_ID, CONDITION, IMAGE_DATA, QUANTITY)
+        INSERT INTO PRODUCTS (ID, TITLE, PRICE, DESCRIPTION, CAT_ID, 
+                              SELLER_ID, PRODCONDITION, IMAGE_DATA, QUANTITY)
         VALUES (prod_seq.NEXTVAL, :1, :2, :3, :4, :5, :6, :7, :8)
     `,
 
@@ -24,16 +24,50 @@ const queries = {
         SET TITLE = :title,
             PRICE = :price,
             QUANTITY = :quantity
-            WHERE PRODUCT_ID = :id
+            WHERE ID = :id
 
     `,
 
     deleteProduct:`
         DELETE FROM PRODUCTS
-        WHERE PRODUCT_ID = :id
+        WHERE ID = :id
 
+    `,
+    insertOrder: `INSERT INTO ORDERS (ORDER_ID, USER_ID, TOTAL_PRICE) 
+                  VALUES (order_seq.NEXTVAL, :userId, 0) 
+                  RETURNING ORDER_ID INTO :newId`,
+    insertOrderItem: `INSERT INTO ORDER_ITEMS (ORDER_ITEM_ID, ORDER_ID, PRODUCT_ID, QUANTITY, UNIT_PRICE) 
+                      VALUES (order_item_seq.NEXTVAL, :orderId, :prodId, :qty, :price)`,
+    updateStock: `UPDATE PRODUCTS SET QUANTITY = QUANTITY - :qty WHERE ID = :id`,
+    getProdPrice: `SELECT PRICE, QUANTITY FROM PRODUCTS WHERE ID = :id`,
+    callCalcProc: `BEGIN calculate_order_total(:oid); END;`,
+
+    getReceiptDetails: `
+        SELECT 
+            o.ORDER_ID, 
+            u.USERNAME, 
+            o.TOTAL_PRICE, 
+            p.TITLE, 
+            oi.QUANTITY, 
+            oi.UNIT_PRICE
+        FROM ORDERS o
+        JOIN USERS u ON o.USER_ID = u.USER_ID
+        JOIN ORDER_ITEMS oi ON o.ORDER_ID = oi.ORDER_ID
+        JOIN PRODUCTS p ON oi.PRODUCT_ID = p.ID
+        WHERE o.ORDER_ID = :oid
     `
 };
+
+async function getReceipt(orderId) {
+    const pool = getPool();
+    const connection = await pool.getConnection();
+    try {
+        const result = await connection.execute(queries.getReceiptDetails, { oid: orderId });
+        return result.rows;
+    } finally {
+        await connection.close();
+    }
+}
 
 
 
@@ -129,4 +163,43 @@ async function deleteProducts(productId){
         await connection.close();
     }
 }
-module.exports = { getAllProducts, createProduct, updateProducts,deleteProducts};
+
+async function placeOrder(userId, cartItems) {
+    const connection = await getPool().getConnection();
+    try {
+        
+        const orderRes = await connection.execute(queries.insertOrder, {
+            userId: userId,
+            newId: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT }
+        });
+        const orderId = orderRes.outBinds.newId[0];
+
+        
+        for (const item of cartItems) {
+            const prod = await connection.execute(queries.getProdPrice, [item.id]);
+            const price = prod.rows[0][0];
+            const stock = prod.rows[0][1];
+
+            if (stock < item.quantity) throw new Error(`No stock sufficient for ${item.id}`);
+
+            await connection.execute(queries.insertOrderItem, {
+                orderId: orderId, prodId: item.id, qty: item.quantity, price: price
+            });
+
+            await connection.execute(queries.updateStock, { qty: item.quantity, id: item.id });
+        }
+
+        
+        await connection.execute(queries.callCalcProc, { oid: orderId });
+
+        await connection.commit();
+        return orderId;
+    } catch (err) {
+        await connection.rollback();
+        throw err;
+    } finally {
+        await connection.close();
+    }
+}
+
+module.exports = { getAllProducts, createProduct, updateProducts,deleteProducts,placeOrder,getReceipt};

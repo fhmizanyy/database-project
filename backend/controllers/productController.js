@@ -51,7 +51,7 @@ async function addProduct(req, res) {
         res.status(500).json({ success: false, message: err.message });
     }
 }
-
+//controller for DELETE
 async function deleteProduct(req,res){
     try{
         const productId = req.params.id;
@@ -68,5 +68,44 @@ async function deleteProduct(req,res){
     }
 }
 
-module.exports = { getProducts, addProduct, updateProduct,deleteProduct};
+
+async function handleCheckout(req, res) {
+    try {
+        const { userId, items } = req.body;
+        const orderId = await productModel.placeOrder(userId, items);
+        res.json({ success: true, orderId: orderId });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+}
+
+async function getOrderReceipt(req, res) {
+    const orderId = req.params.orderId;
+
+    try {
+        const rows = await productModel.getReceipt(orderId);
+        
+        if (rows.length === 0) {
+            return res.status(404).json({ success: false, message: 'Receipt not found' });
+        }
+
+        const receipt = {
+            orderId: rows[0][0],
+            buyer: rows[0][1],
+            grandTotal: rows[0][2],
+            items: rows.map(row => ({
+                productName: row[3],
+                qty: row[4],
+                price: row[5]
+            }))
+        };
+
+        res.json({ success: true, data: receipt });
+
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+}
+
+module.exports = { getProducts, addProduct, updateProduct,deleteProduct,handleCheckout,getOrderReceipt};
 

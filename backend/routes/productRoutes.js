@@ -6,10 +6,11 @@ const upload = require('../middleware/upload');
 
 
 // Define routes
-
-router.put('/products/:id', productController.updateProduct);
-router.get('/products', productController.getProducts);
-router.post('/add-product', upload.single('productImage'), productController.addProduct);
-router.delete('/products/:id',productController.deleteProduct);
+router.put('/products/:id', productController.updateProduct); //update
+router.get('/products', productController.getProducts); //getData
+router.post('/add-product', upload.single('productImage'), productController.addProduct); //addproduct
+router.delete('/products/:id',productController.deleteProduct); //delete
+router.post('/checkout', productController.handleCheckout); //total_price
+router.get('/receipt/:orderId', productController.getOrderReceipt); //receipt 3 table
 
 module.exports = router;

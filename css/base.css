@@ -1,11 +1,23 @@
-/* RESET & GLOBAL */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
-body{
-  background-color:rgb(213, 229, 248);
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: rgb(137, 198, 255);
+  transition: margin-left 0.3s ease;
+}
+
+.Main {
+  margin-top: 50px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  background-color: rgb(137, 198, 255);
+}
+
+/* Sidebar push effect for the header */
+.market-header.shifted {
+  left: 250px;
 }

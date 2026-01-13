@@ -27,21 +27,32 @@ if(productsGrid) {
   const sidebar = document.querySelector('.side-navigation');
   const menuBtn = document.querySelector('.js-menu-btn');
   const closeBtn = document.querySelector('.js-close-btn');
+  const header = document.querySelector('.market-header');
+  const body = document.body;
 
 if(closeBtn){
-  closeBtn.addEventListener('click', () => closeNav);
+  closeBtn.addEventListener('click', closeNav);
 }
 
 if(menuBtn){
-  menuBtn.addEventListener('click',() => openNav);
+  menuBtn.addEventListener('click',openNav);
 }
 
 function closeNav() {
-  if (sidebar) sidebar.style.width = '0'
+  if (sidebar) {
+    sidebar.style.width = '0';
+    body.style.marginLeft = "0";
+    header.style.marginLeft = "0";
+  }
 };
 
 function openNav() {
-  if (sidebar) sidebar.style.width = '250px'
+  if (sidebar){ 
+    sidebar.style.width = '250px';
+    body.style.marginLeft = "250px";
+    header.style.marginLeft = "250px";
+  
+  }
 };
 
  
