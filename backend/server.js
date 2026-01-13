@@ -1,37 +1,48 @@
-/*
+
+require('dotenv').config();
 const express = require('express');
 const oracledb = require('oracledb');
 const cors = require('cors');
 const multer = require('multer');
 
+const { initPool, closePool, getPool } = require('./config/database');
+const productRoutes = require('./routes/productRoutes');
+
 const app = express();
+const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Initialize Oracle Client
-oracledb.initOracleClient({ 
+/*oracledb.initOracleClient({ 
     libDir: 'C:\\Users\\fhmiz\\Desktop\\oracle\\instantclient_23_26\\instantclient_23_0' 
 });
+*/
+try {
+    oracledb.initOracleClient({ thin: true });
+} catch (e) { }
 
 // Create connection pool
+/*
 let pool;
 async function initPool() {
     pool = await oracledb.createPool({
-        user: "testing",
-        password: "testing",
-        connectString: "127.0.0.1:1521/xe",
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        connectString: process.env.DB_CONNECT || "localhost/xe",
         poolMin: 2,
         poolMax: 10,
         poolIncrement: 2
     });
     console.log('Connection pool created');
 }
-
+*/
 // GET all products
 app.get('/api/products', async (req, res) => {
     let connection;
     try {
+        const pool = getPool();
         connection = await pool.getConnection();
         
         const result = await connection.execute(
@@ -72,7 +83,7 @@ app.post('/api/add-product', upload.single('productImage'), async (req, res) => 
     try {
         const { productName, productPrice, productDescription, categoryId, 
                 sellerId, condition, quantity } = req.body;
-        
+        const pool = getPool();
         connection = await pool.getConnection();
 
         await connection.execute(
@@ -100,20 +111,7 @@ app.post('/api/add-product', upload.single('productImage'), async (req, res) => 
         if (connection) await connection.close();
     }
 });
-*/
 
-//start the server
-
-const express = require('express');
-const cors = require('cors');
-const { initPool,closePool } = require('./config/database');
-const productRoutes = require('./routes/productRoutes');
-
-const app = express();
-const PORT = 3000;
-
-app.use(cors());
-app.use(express.json());
 
 app.use('/api',productRoutes);
 
