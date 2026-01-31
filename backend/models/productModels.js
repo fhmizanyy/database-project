@@ -6,7 +6,7 @@ const oracledb = require('oracledb');
 // All SQL queries in one place
 const queries = {
     getAllProducts: `
-        SELECT p.ID, p.TITLE, p.PRICE, p.DESCRIPTION, p.IMAGE_DATA,
+        SELECT p.PRODUCT_ID, p.TITLE, p.PRICE, p.DESCRIPTION, p.IMAGE_DATA,
                c.CAT_NAME, u.USERNAME, u.RATING, u.MAHALLAH, p.QUANTITY
         FROM PRODUCTS p
         JOIN CATEGORIES c ON p.CAT_ID = c.CAT_ID
@@ -14,9 +14,9 @@ const queries = {
     `,
     
     insertProduct: `
-        INSERT INTO PRODUCTS (ID, TITLE, PRICE, DESCRIPTION, CAT_ID, 
+        INSERT INTO PRODUCTS (PRODUCT_ID, TITLE, PRICE, DESCRIPTION, CAT_ID, 
                               SELLER_ID, PRODCONDITION, IMAGE_DATA, QUANTITY)
-        VALUES (prod_seq.NEXTVAL, :1, :2, :3, :4, :5, :6, :7, :8)
+        VALUES (product_id_sq.NEXTVAL, :1, :2, :3, :4, :5, :6, :7, :8)
     `,
 
     updateProductsFields: `
@@ -24,13 +24,13 @@ const queries = {
         SET TITLE = :title,
             PRICE = :price,
             QUANTITY = :quantity
-            WHERE ID = :id
+            WHERE PRODUCT_ID = :id
 
     `,
 
     deleteProduct:`
         DELETE FROM PRODUCTS
-        WHERE ID = :id
+        WHERE PRODUCT_ID = :id
 
     `,
     insertOrder: `INSERT INTO ORDERS (ORDER_ID, USER_ID, TOTAL_PRICE) 
@@ -38,8 +38,8 @@ const queries = {
                   RETURNING ORDER_ID INTO :newId`,
     insertOrderItem: `INSERT INTO ORDER_ITEMS (ORDER_ITEM_ID, ORDER_ID, PRODUCT_ID, QUANTITY, UNIT_PRICE) 
                       VALUES (order_item_seq.NEXTVAL, :orderId, :prodId, :qty, :price)`,
-    updateStock: `UPDATE PRODUCTS SET QUANTITY = QUANTITY - :qty WHERE ID = :id`,
-    getProdPrice: `SELECT PRICE, QUANTITY FROM PRODUCTS WHERE ID = :id`,
+    updateStock: `UPDATE PRODUCTS SET QUANTITY = QUANTITY - :qty WHERE PRODUCT_ID = :id`,
+    getProdPrice: `SELECT PRICE, QUANTITY FROM PRODUCTS WHERE PRODUCT_ID = :id`,
     callCalcProc: `BEGIN calculate_order_total(:oid); END;`,
 
     getReceiptDetails: `
@@ -53,7 +53,7 @@ const queries = {
         FROM ORDERS o
         JOIN USERS u ON o.USER_ID = u.USER_ID
         JOIN ORDER_ITEMS oi ON o.ORDER_ID = oi.ORDER_ID
-        JOIN PRODUCTS p ON oi.PRODUCT_ID = p.ID
+        JOIN PRODUCTS p ON oi.PRODUCT_ID = p.PRODUCT_ID
         WHERE o.ORDER_ID = :oid
     `
 };
@@ -138,8 +138,8 @@ async function updateProducts(productId,updateData){
         const result = await connection.execute(queries.updateProductsFields, bindData,{autoCommit : true });
 
         return result;
-    }catch {
-        console.error('Error updating database:',err);
+    }catch(err){
+        console.error('Error updating database:' ,err);
         throw err;
     } finally {
         await connection.close();
@@ -156,7 +156,7 @@ async function deleteProducts(productId){
         }
         const result = await connection.execute(queries.deleteProduct,selectBind,{autoCommit: true});
         return result;
-    } catch {
+    } catch(err){
         console.error('error deleting from database',err);
         throw err;
     } finally {
@@ -203,3 +203,5 @@ async function placeOrder(userId, cartItems) {
 }
 
 module.exports = { getAllProducts, createProduct, updateProducts,deleteProducts,placeOrder,getReceipt};
+
+

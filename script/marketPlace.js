@@ -108,6 +108,11 @@ export function renderProducts(products){
         <div class="product-mahallah">
             ${product.mahallah}
         </div>
+
+        <div class="product-quantity">
+        ${product.quantity} units left
+        </div>
+
         <div class="product-price">
           RM${priceCentsFixed(product.price)}
         </div>

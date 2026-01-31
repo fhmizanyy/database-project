@@ -9,7 +9,7 @@ document.querySelector('.sell-form').addEventListener('submit', async (e) => {
     formData.append('categoryId', document.getElementById('category').value);
     formData.append('condition', document.getElementById('condition').value);
     formData.append('quantity', document.getElementById('quantity').value);
-    formData.append('sellerId', 1100); 
+    formData.append('sellerId', 1000); 
 
     const fileInput = document.getElementById('imageInput'); 
     if (fileInput.files.length > 0) {
@@ -19,8 +19,6 @@ document.querySelector('.sell-form').addEventListener('submit', async (e) => {
     try {
         const response = await fetch('http://localhost:3000/api/add-product', {
             method: 'POST',
-            // PENTING: Jangan letak headers 'Content-Type': 'application/json'
-            // Browser akan automatik set jadi 'multipart/form-data'
             body: formData 
         });
 

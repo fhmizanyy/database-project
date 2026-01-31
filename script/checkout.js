@@ -35,7 +35,7 @@ export function renderCart(dataProducts){
 
      
     if (!matchingProduct) {
-      console.error(`Produk dengan ID ${productId} tidak dijumpai dalam senarai API.`);
+      console.error(`Product with ID ${productId} not found in API.`);
       return; 
     }
 
@@ -175,7 +175,7 @@ export function renderCart(dataProducts){
         clearCart();
         window.location.href = `success.html?orderId=${result.orderId}`; 
       } else {
-        alert("Gagal:" + result.message);
+        alert("Error:" + result.message);
       }
 
 

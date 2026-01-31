@@ -68,6 +68,15 @@
   margin-top: 6px;
 }
 
+.product-quantity{
+  font-size:10px;
+  font-weight: bold;
+  color:black;
+  padding:6px;
+  align-items:start;
+}
+
+
 .main {
   margin-top: 60px;
   margin-bottom: 60px;
